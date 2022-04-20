@@ -12,13 +12,18 @@ module.exports = {
         signin: {
             path: '/signin',
             name: 'Sign in'
+        },
+        resetPassword: {
+            path: '/resetpassword',
+            name: 'Reset password'
         }
     },
     api: {
         urls: {
             signIn: '/signin',
             verifyPassword: '/user/me/verifypassword',
-            changePassword: '/user/me/changepassword'
+            changePassword: '/user/me/changepassword',
+            emailResetPasswordLink: '/user/me/emailpasswordresetlink'
         }
     }
 }

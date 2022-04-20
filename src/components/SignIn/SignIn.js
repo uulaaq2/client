@@ -8,11 +8,12 @@ import signIn from '../../functions/signIn/signIn'
 import { setCookie} from '../../functions/cookie'
 import { useAppContext } from '../../context/AppWrapper'
 import ChangePassword from '../ChangePassword/ChangePassword'
+import ForgotPassword from '../ForgotPassword/ForgotPassword'
 
 import InputAlert from '../Alerts/InputAlert'
 import FormAlert from '../Alerts/FormAlert'
 
-import { Grid, Paper, FormGroup, TextField, FormControlLabel, Checkbox } from '@mui/material'
+import { Grid, Paper, FormGroup, TextField, FormControlLabel, Checkbox, Stack, Button } from '@mui/material'
 import { LoadingButton } from '@mui/lab'
 import { useNavigate } from 'react-router-dom'
 
@@ -26,6 +27,7 @@ const SignIn = () => {
   const [inProgress, setInProgress] = useState(false)
   const [erroredInputFields, setErroredInputFields] = useState([])
   const [showShouldChangePassword, setShowShouldChangePassword] = useState(false)
+  const [showForgotPassword, setShowForgotPassword] = useState(false)
   const [token, setToken] = useState('')
   const navigate = useNavigate()
   
@@ -126,7 +128,33 @@ const SignIn = () => {
   }
 
   return (
-    <>
+    <>      
+      <Grid container direction="row" justifyContent="center" alignItems="center" style={{height: "100vh"}}>
+          <Paper className={styles.wrapper}>
+            <img src={logo} alt={appName} className={styles.logo} />
+            <FormGroup>
+              <TextField error={emailError ? true : false} fullWidth label="Email address" type="text" inputRef={emailRef} />
+              { emailError ? <InputAlert message={emailError} /> : ''}              
+            </FormGroup>
+            <FormGroup>
+              <TextField error={passwordError ? true : false} fullWidth label="Password" type="password" inputRef={passwordRef} />
+              { passwordError ? <InputAlert message={passwordError} /> : ''}              
+            </FormGroup>
+            <FormGroup>
+              <Stack direction='row' justifyContent='space-between'>
+                <FormControlLabel control={<Checkbox inputRef={rememberMeRef} />} label="Remember me" />
+                <Button variant='text' onClick={() => setShowForgotPassword(true)}>Forgot Password ?</Button>
+              </Stack>
+            </FormGroup>
+            <FormGroup>
+              <LoadingButton onClick={handleFormSubmit} loading={inProgress} {...btnOk()} >
+                Sign in
+              </LoadingButton>            
+            </FormGroup>
+            { formError ? <FormGroup><FormAlert message={formError} /></FormGroup> : ''}
+          </Paper>
+      </Grid>
+
       { showShouldChangePassword ? 
         <ChangePassword 
           openStateControllers = {{showShouldChangePassword, setShowShouldChangePassword}}
@@ -136,28 +164,13 @@ const SignIn = () => {
           redirectTo = {homePage}
         />
         :
-        <Grid container direction="row" justifyContent="center" alignItems="center" style={{height: "100vh"}}>
-            <Paper className={styles.wrapper}>
-              <img src={logo} alt={appName} className={styles.logo} />
-              <FormGroup>
-                <TextField error={emailError ? true : false} fullWidth label="Email address" type="text" inputRef={emailRef} />
-                { emailError ? <InputAlert message={emailError} /> : ''}              
-              </FormGroup>
-              <FormGroup>
-                <TextField error={passwordError ? true : false} fullWidth label="Password" type="password" inputRef={passwordRef} />
-                { passwordError ? <InputAlert message={passwordError} /> : ''}              
-              </FormGroup>
-              <FormGroup>
-                <FormControlLabel control={<Checkbox inputRef={rememberMeRef} />} label="Remember me" />
-              </FormGroup>
-              <FormGroup>
-                <LoadingButton onClick={handleFormSubmit} loading={inProgress} {...btnOk()} >
-                  Sign in
-                </LoadingButton>            
-              </FormGroup>
-              { formError ? <FormGroup><FormAlert message={formError} /></FormGroup> : ''}
-            </Paper>
-        </Grid>
+        ''
+      }
+
+      { showForgotPassword ? 
+        <ForgotPassword openStateControllers={{showForgotPassword, setShowForgotPassword}} />
+        :
+        ''
       }
     </>    
   )

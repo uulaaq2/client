@@ -82,7 +82,7 @@ const ChangePassword = ({ title = 'Change your password', openStateControllers, 
   }
 
   useEffect(() => {
-   
+   console.log('token ', token)
     return
     if (requireCurrentPassword) {
       currentPasswordRef.current.focus()
@@ -127,12 +127,16 @@ const ChangePassword = ({ title = 'Change your password', openStateControllers, 
           return
         }
       }
-
       const changePasswordResult = await changePassword(passwordRef.current.value, token)
       if (changePasswordResult.status !== 'ok') {
         throw new Error(changePasswordResult.message)
       }
       
+      const setCookieResult = setCookie('token', token, rememberMe)
+      if (setCookieResult.status !== 'ok') {
+        throw new Error(setCookieResult.message)
+      }
+
       setShowPasswordIsChanged(true)
     } catch (error) {
       setFormError(error.message)

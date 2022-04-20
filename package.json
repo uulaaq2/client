@@ -41,5 +41,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://AUBOTD9X94HD2:3001"  
+  "proxy": "http://localhost:3001"  
 }
