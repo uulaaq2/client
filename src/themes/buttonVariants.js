@@ -6,7 +6,7 @@ export const btnOk = () => {
 
 export const btnDialogOk = () => {
   return {
-    variant: "text"
+    variant: "contained"
   }
 }
 

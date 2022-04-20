@@ -35,9 +35,9 @@ const validateInputFields = (inputs) => {
               notChecked = false
             }
     
-            if (currentKey.matchRef && notChecked) {
-              if(inputValue !== currentKey.matchRef.current.value) {
-                errorText = currentKey.matchFieldName + ' should match ' + currentKey.name
+            if (currentKey.match) {
+              if(inputValue !== currentKey.match.current.value) {
+                errorText = currentKey.matchLabel + ' should match ' + currentKey.name
                 erroredElements.push(currentKey.ref.current)
               }
             }  

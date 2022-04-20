@@ -1,9 +1,9 @@
 import { setCustom, setError, setSuccess } from "./setReply";
 import { getCookie } from './cookie'
+import { JavascriptOutlined } from "@mui/icons-material";
 
 const acceptTypes = {
   json: {
-    credentials: "include",
     headers: {        
       "Accept": "application/json",
       "Content-Type": "application/json"
@@ -14,39 +14,39 @@ const acceptTypes = {
 async function fetchData(options) {
   try {
     const url = options.url
-    const method = options.method
-    const accepts = options.accepts
-    const optionsBody = { ...options.body }
+    const method = options.method    
+    const accepts = {
+      headers: {
+        ...acceptTypes[options.accepts]
+      }
+    } 
+    let body = options.body
+    let addToBody = {}
+
     const cookieName = options.cookieName
-
-    const headers = {      
-      method,
-      ...acceptTypes[accepts]
-    }
-
-    /*if (cookieName) {
-      const getCookieResult = getCookie(cookieName)
-      if (getCookieResult.status !== 'ok') {
-        return getCookieResult
+    if (cookieName) {
+      const cookieValueResult = getCookie(cookieName)
+      if (cookieValueResult.status !== 'ok') {
+        return cookieValueResult
       }
-      
-      if (getCookieResult.value) {
-        optionsBody[cookieName] = getCookieResult.value
+
+      addToBody = {
+        [cookieName]: cookieValueResult.value
       }
-    }*/
+    }    
+    
+    body = {...body, ...addToBody}
 
     const fetchOptions = {
-      ...headers,      
-      body: JSON.stringify({ ...optionsBody })
+      method,
+      ...accepts,
+      body: JSON.stringify({ ...body })
     }
 
-    console.log('aaa fetchoptions ', fetchOptions)
-
-    const fetchDataResult = await fetch(url, fetchOptions)    
-    const result = await fetchDataResult.json()
-
-    return result    
-
+    const fetchResult = await fetch(url, fetchOptions)
+    
+    return await fetchResult[options.accepts]() 
+  
   } catch (error) {
     return setError(error)
   }

@@ -6,17 +6,19 @@ module.exports = {
     },
     urls: {
         home: {
-            link: '/',
+            path: '/',
             name: 'Home'
         },
         signin: {
-            link: '/signin',
+            path: '/signin',
             name: 'Sign in'
         }
     },
     api: {
         urls: {
-            signin: "/signin"
+            signIn: '/signin',
+            verifyPassword: '/user/me/verifypassword',
+            changePassword: '/user/me/changepassword'
         }
     }
 }

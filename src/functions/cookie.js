@@ -1,10 +1,10 @@
 import { cookieExpiresIn } from "../config/config.global"
 import { setCustom, setError, setSuccess } from "./setReply"
 
-export function setCookie(name, value, useCookieExpiresIn = true) {
+export function setCookie(name, value, setCookieExpirationTime = true) {
   try {        
     let expires = ''
-    if (useCookieExpiresIn) {
+    if (setCookieExpirationTime) {
       let date = new Date();
       date.setTime(date.getTime() + (cookieExpiresIn * 24 * 60 * 60 * 1000));
       expires = "expires=" + date.toUTCString();
@@ -28,11 +28,14 @@ export function getCookie(name) {
     name += "="
     const cDecoded = decodeURIComponent(document.cookie);
     const cArr = cDecoded .split('; ');
-    let res;
-    cArr.forEach(val => {
-        if (val.indexOf(name) === 0) res = val.substring(name.length);
-    })
+    let res = ''
     
+    if (cArr) {
+      cArr.forEach(val => {
+          if (val.indexOf(name) === 0) res = val.substring(name.length);
+      })      
+    }
+
     const data = {
       name,
       value: res

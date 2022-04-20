@@ -21,11 +21,18 @@ const setSuccess = (data = null) => {
     return reply
 }
 
-const setWarning = (message = '') => {
-    return {
+const setWarning = (message = '', data = null) => {
+    let reply = {
         status: 'warning',
         message: message
     }
+
+    if (data) {
+        reply.data = {
+            ...data
+        }
+    }
+    return reply
 }
 
 const setCustom = (status, message = '')  => {
