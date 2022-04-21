@@ -23,7 +23,8 @@ module.exports = {
             signIn: '/signin',
             verifyPassword: '/user/me/verifypassword',
             changePassword: '/user/me/changepassword',
-            emailResetPasswordLink: '/user/me/emailpasswordresetlink'
+            emailResetPasswordLink: '/user/me/emailpasswordresetlink',
+            getDrawings: '/getdrawings'
         }
     }
 }

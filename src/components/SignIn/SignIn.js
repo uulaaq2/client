@@ -141,9 +141,9 @@ const SignIn = () => {
               { passwordError ? <InputAlert message={passwordError} /> : ''}              
             </FormGroup>
             <FormGroup>
-              <Stack direction='row' justifyContent='space-between'>
-                <FormControlLabel control={<Checkbox inputRef={rememberMeRef} />} label="Remember me" />
-                <Button variant='text' onClick={() => setShowForgotPassword(true)}>Forgot Password ?</Button>
+              <Stack direction='row' justifyContent='space-between' alignItems='top'>
+                <FormControlLabel control={<Checkbox style={{fontsize: '0.5rem'}} inputRef={rememberMeRef} />} label="Remember me" />
+                <Button variant='text' size='small' style={{fontSize: '0.8rem'}} onClick={() => setShowForgotPassword(true)}>Forgot Password ?</Button>
               </Stack>
             </FormGroup>
             <FormGroup>
