@@ -106,10 +106,11 @@ const SignIn = () => {
         throw new Error(signInResult.message)
       }
 
-      const setCookieResult = setCookie('token', signInResult.token, rememberMeRef.current.checked)
+      const setCookieExpirationTime = signInResult.user.Can_Be_Remembered === 'Yes' ? rememberMeRef.current.checked : false
+      const setCookieResult = setCookie('token', signInResult.token, setCookieExpirationTime)
       if (setCookieResult.status !== 'ok') {
         throw new Error(setCookieResult.message)
-      }     
+      }         
       
       setAppContext({
         ...getAppContext,
@@ -117,8 +118,8 @@ const SignIn = () => {
           ...signInResult.user
         }
       })
-      
-      navigate(homePage.path)
+
+      navigate(signInResult.user.Home_Page)
       setFormError('')
       
     } catch (error) {

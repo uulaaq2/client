@@ -1,9 +1,10 @@
 html,
 body {
-  min-height: 100vh;    
+  min-height: 100vh;   
+  max-height: 100vh; 
 }
 
 body {
   background: rgb(255,255,255);
-  background: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(182,182,182,0.44021358543417366) 100%);
+  background: linear-gradient(45deg, rgba(255,255,255,1) 0%, rgba(182,182,182,0.95) 100%), url('./images/bck.jpg');  
 }

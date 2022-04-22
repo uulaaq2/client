@@ -1,16 +1,14 @@
 import fetchData from './fetchData'
 import config from '../config'
 import { setError } from './setReply'
-import { getCookie } from './cookie'
 
-async function getDrawings(searchText) {
+async function verifyToken(newPassword = null, token = null) {
   try {
-    const token = getCookie('token').value
     const fetchDataOptions = {
-      url: config.api.urls.getDrawings,
+      url: config.api.urls.verifyToken,
       method: "POST",
       accepts: "json",
-      body: { token, searchText }
+      cookieName: "token"
     }
   
     const fetchDataResult = await fetchData(fetchDataOptions)
@@ -21,4 +19,4 @@ async function getDrawings(searchText) {
   }
 }
 
-export default getDrawings
+export default verifyToken

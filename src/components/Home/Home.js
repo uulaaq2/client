@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect, } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext } from '../../context/AppWrapper'
-import { getCookie, setCookie } from '../../functions/cookie'
+import isUserSignedIn from '../../functions/isUserSignedIn'
+import config from '../../config'
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,6 +10,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { CompressOutlined } from '@mui/icons-material'
+
 
 const bull = (
   <Box
@@ -25,13 +28,26 @@ const Home = () => {
   const navigate = useNavigate()
 
   useEffect(() => {    
-    if (!getCookie('token').value) {
-      navigate('/signin')
+    const main = async () => {
+      const isUserSignedInResult = await isUserSignedIn()      
+      if (isUserSignedInResult.status !== 'ok') {    
+        navigate(config.urls.signIn.path)
+        return
+      }
+
+      setAppContext({
+        ...getAppContext,
+        user: {
+          ...isUserSignedInResult.decryptedData
+        }
+      })
     }
+
+    main()
   }, [])
 
   function handleRedirect() {
-    navigate('/drawings')
+    navigate(config.urls.drawings.path)
   }
 
   return (

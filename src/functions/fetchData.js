@@ -20,9 +20,9 @@ async function fetchData(options) {
         ...acceptTypes[options.accepts]
       }
     } 
-    let body = options.body
+    let body = options.body || {}
     let addToBody = {}
-
+    
     const cookieName = options.cookieName
     if (cookieName) {
       const cookieValueResult = getCookie(cookieName)
